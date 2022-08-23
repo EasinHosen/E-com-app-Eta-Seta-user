@@ -1,0 +1,145 @@
+{
+  "project_info": {
+    "project_number": "23444237739",
+    "project_id": "time-tracker-flutter-71aa2",
+    "storage_bucket": "time-tracker-flutter-71aa2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:23444237739:android:79dea196c1818eeaca36ee",
+        "android_client_info": {
+          "package_name": "com.kkeb.etaseta_admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "23444237739-0h9bpkusk135cilooqpm0v1satub2vo5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kkeb.etaseta_admin",
+            "certificate_hash": "0395a3eff703c2443abf1848e336f8718aa8d846"
+          }
+        },
+        {
+          "client_id": "23444237739-v368uc15oeugosiul8pislgl0d7kaot9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kkeb.etaseta_admin",
+            "certificate_hash": "63758610fa37e6245cfed6de0465be5f59460366"
+          }
+        },
+        {
+          "client_id": "23444237739-3fapgmu6kagevkk9a18dgopv547q2lg2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1zKmtW8AVp6-_hBomunz7SDd1c3oSK2k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "23444237739-3fapgmu6kagevkk9a18dgopv547q2lg2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:23444237739:android:96ab967d8d629642ca36ee",
+        "android_client_info": {
+          "package_name": "com.kkeb.etaseta_user"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "23444237739-8q9qnbn7i6fsq6rjh5j701n0b6tpb28o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kkeb.etaseta_user",
+            "certificate_hash": "63758610fa37e6245cfed6de0465be5f59460366"
+          }
+        },
+        {
+          "client_id": "23444237739-d9k3m29f623sev7a0uim5tamtok5s4dp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kkeb.etaseta_user",
+            "certificate_hash": "73e385d1ac6181335b1932e1a263df34c139f3c0"
+          }
+        },
+        {
+          "client_id": "23444237739-pnl2thql5h9vlf6u4taal6g7uc42b1ff.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kkeb.etaseta_user",
+            "certificate_hash": "0395a3eff703c2443abf1848e336f8718aa8d846"
+          }
+        },
+        {
+          "client_id": "23444237739-3fapgmu6kagevkk9a18dgopv547q2lg2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1zKmtW8AVp6-_hBomunz7SDd1c3oSK2k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "23444237739-3fapgmu6kagevkk9a18dgopv547q2lg2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:23444237739:android:1b21f267f8719abaca36ee",
+        "android_client_info": {
+          "package_name": "com.kkeb.time_tracker_flutter_course"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "23444237739-eines904ga6bf2udg7arh5pvhf7st9dd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kkeb.time_tracker_flutter_course",
+            "certificate_hash": "0395a3eff703c2443abf1848e336f8718aa8d846"
+          }
+        },
+        {
+          "client_id": "23444237739-3fapgmu6kagevkk9a18dgopv547q2lg2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1zKmtW8AVp6-_hBomunz7SDd1c3oSK2k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "23444237739-3fapgmu6kagevkk9a18dgopv547q2lg2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
