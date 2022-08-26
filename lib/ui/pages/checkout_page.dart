@@ -1,5 +1,3 @@
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:etaseta_user/auth/auth_services.dart';
 import 'package:etaseta_user/models/user_model.dart';
@@ -40,7 +38,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Checkout"),
+        title: const Text("Checkout"),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -54,21 +52,21 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   style: Theme.of(context).textTheme.headline6,
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Card(
                   child: Column(
                     children: cartProvider.cartList
                         .map((cartModel) => ListTile(
-                      title: Text(cartModel.pName!),
-                      trailing: Text(
-                          "${cartModel.pQty} * ৳${cartModel.pPrice}"),
-                    ))
+                              title: Text(cartModel.pName!),
+                              trailing: Text(
+                                  "${cartModel.pQty} * ৳${cartModel.pPrice}"),
+                            ))
                         .toList(),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Text(
@@ -81,32 +79,40 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     children: [
                       ListTile(
                         leading: const Text("Subtotal"),
-                        trailing: Text('$currencySymbol ${cartProvider.getCartSubtotal()}'),
+                        trailing: Text(
+                            '$currencySymbol ${cartProvider.getCartSubtotal()}'),
                       ),
                       ListTile(
                         leading: Text("Delivery Charge"),
-                        trailing: Text('${orderProvider.orderConstantsModel.deliveryCharge}'),
+                        trailing: Text(
+                            '${orderProvider.orderConstantsModel.deliveryCharge}'),
                       ),
                       ListTile(
-                        leading: Text("Discount(${orderProvider.orderConstantsModel.discount}%)"),
-                        trailing: Text("$currencySymbol ${orderProvider.getDiscount(cartProvider.getCartSubtotal())}"),
+                        leading: Text(
+                            "Discount(${orderProvider.orderConstantsModel.discount}%)"),
+                        trailing: Text(
+                            "$currencySymbol ${orderProvider.getDiscount(cartProvider.getCartSubtotal())}"),
                       ),
                       ListTile(
-                        leading: Text("Vat(${orderProvider.orderConstantsModel.vat}%)"),
-                        trailing: Text("$currencySymbol ${orderProvider.getVatAmount(cartProvider.getCartSubtotal())}"),
+                        leading: Text(
+                            "Vat(${orderProvider.orderConstantsModel.vat}%)"),
+                        trailing: Text(
+                            "$currencySymbol ${orderProvider.getVatAmount(cartProvider.getCartSubtotal())}"),
                       ),
-                      Divider(),
+                      const Divider(),
                       ListTile(
-                        leading: Text("Grand total:"),
-                        trailing: Text("$currencySymbol ${orderProvider.getGrandTotal(cartProvider.getCartSubtotal())}",
-                          style: TextStyle(
+                        leading: const Text("Grand total:"),
+                        trailing: Text(
+                          "$currencySymbol ${orderProvider.getGrandTotal(cartProvider.getCartSubtotal())}",
+                          style: const TextStyle(
                             fontSize: 20,
-                          ),),
+                          ),
+                        ),
                       ),
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Text(
@@ -114,19 +120,22 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   style: Theme.of(context).textTheme.headline6,
                   textAlign: TextAlign.center,
                 ),
-
                 Card(
                   child: ListTile(
-                    title: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+                    title:
+                        StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
                       stream: userProvider.getUserByUid(AuthService.user!.uid),
-                      builder:(context, snapshot)
-                      {
-                        if(snapshot.hasData){
-                          final userM = UserModel.fromMap(snapshot.data!.data()!);
-                          final addressM = userM.addressModel;
-                          return Text( addressM == null ? 'No address found!' : '${addressM.streetAddress}\n${addressM.area}\n${addressM.city}\n${addressM.zipCode}');
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          final userM =
+                              UserModel.fromMap(snapshot.data!.data()!);
+                          final addressM = userM.address;
+                          print(addressM);
+                          return Text(addressM == null
+                              ? 'No address found!'
+                              : '${addressM.streetAddress}\n${addressM.area}\n${addressM.city}\n${addressM.zipCode}');
                         }
-                        if(snapshot.hasError){
+                        if (snapshot.hasError) {
                           return const Text('Error fetching data!');
                         }
                         return const Text('Fetching data...');
@@ -137,10 +146,10 @@ class _CheckoutPageState extends State<CheckoutPage> {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(15))),
                         onPressed: () {},
-                        child: Text("Set")),
+                        child: const Text("Set")),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Text(
@@ -152,12 +161,12 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   children: [
                     Expanded(
                       child: ListTile(
-                        title: Text("COD"),
+                        title: const Text("COD"),
                         leading: Radio<String>(
                             value: "COD",
                             groupValue: groupValue,
                             fillColor: MaterialStateColor.resolveWith(
-                                    (states) => groupValue == "COD"
+                                (states) => groupValue == "COD"
                                     ? Colors.red
                                     : Colors.grey),
                             onChanged: (value) {
@@ -169,12 +178,14 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     ),
                     Expanded(
                       child: ListTile(
-                        title: Text("Online"),
+                        title: const Text("Online"),
                         leading: Radio<String>(
                           value: "Online",
                           groupValue: groupValue,
                           fillColor: MaterialStateColor.resolveWith((states) =>
-                          groupValue == "Online" ? Colors.red : Colors.grey),
+                              groupValue == "Online"
+                                  ? Colors.red
+                                  : Colors.grey),
                           onChanged: (value) {
                             setState(() {
                               groupValue = value as String;

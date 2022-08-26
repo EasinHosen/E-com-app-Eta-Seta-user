@@ -9,13 +9,13 @@ const String userMobile = 'mobile';
 const String userImage = 'image';
 const String userDeviceToken = 'deviceToken';
 const String userCreationTime = 'creationTime';
-const String userAddress = 'addressModel';
+const String userAddress = 'address';
 
 class UserModel {
   String uid, email;
   String? name, mobile, image, deviceToken;
   Timestamp creationTime;
-  AddressModel? addressModel;
+  AddressModel? address;
 
   UserModel({
     required this.uid,
@@ -25,7 +25,7 @@ class UserModel {
     this.image,
     this.deviceToken,
     required this.creationTime,
-    this.addressModel,
+    this.address,
   });
 
   Map<String, dynamic> toMap() {
@@ -37,19 +37,20 @@ class UserModel {
       userImage: image,
       userDeviceToken: deviceToken,
       userCreationTime: creationTime,
-      userAddress : addressModel?.toMap(),
+      userAddress: address?.toMap(),
     };
   }
 
   factory UserModel.fromMap(Map<String, dynamic> map) => UserModel(
-      uid: map[userId],
-      name: map[userName],
-      email: map[userEmail],
-      mobile: map[userMobile],
-      image: map[userImage],
-      deviceToken: map[userDeviceToken],
-      creationTime: map[userCreationTime],
-      addressModel: AddressModel.fromMap(map[userAddress]),
-  );
-
+        uid: map[userId],
+        name: map[userName],
+        email: map[userEmail],
+        mobile: map[userMobile],
+        image: map[userImage],
+        deviceToken: map[userDeviceToken],
+        creationTime: map[userCreationTime],
+        address: map[userAddress] == null
+            ? null
+            : AddressModel.fromMap(map[userAddress]),
+      );
 }

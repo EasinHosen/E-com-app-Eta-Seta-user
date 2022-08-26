@@ -293,8 +293,10 @@ class _LoginPageState extends State<LoginPage> {
           email: value.user!.email!,
           creationTime: Timestamp.fromDate(value.user!.metadata.creationTime!),
         );
-        await Provider.of<UserProvider>(context, listen: false)
-            .addUser(userModel);
+        if (value.additionalUserInfo!.isNewUser == true) {
+          await Provider.of<UserProvider>(context, listen: false)
+              .addUser(userModel);
+        }
         Navigator.pushReplacementNamed(context, LauncherPage.routeName);
       }
     }).onError((error, _) {
