@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:etaseta_user/models/cart_model.dart';
 import 'package:etaseta_user/models/product_model.dart';
@@ -18,6 +16,7 @@ class DBHelper {
   static const String collectionOrderDetails = 'orderDetails';
   static const String collectionOrderSettings = 'settings';
   static const String documentOrderConstant = 'orderConstant';
+  static const String collectionCities = 'cities';
 
   static final FirebaseFirestore _db = FirebaseFirestore.instance;
 
@@ -98,4 +97,7 @@ class DBHelper {
 
   static Future<DocumentSnapshot<Map<String, dynamic>>> getOrderConstants() =>
       _db.collection(collectionOrderSettings).doc(documentOrderConstant).get();
+
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getAllCities() =>
+      _db.collection(collectionCities).snapshots();
 }

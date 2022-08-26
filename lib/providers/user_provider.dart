@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:etaseta_user/models/city_model.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
@@ -9,6 +10,7 @@ import '../db/db_helper.dart';
 import '../models/user_model.dart';
 
 class UserProvider extends ChangeNotifier {
+  List<CityModel> cityList = [];
 
   Future<void> addUser(UserModel userModel) => DBHelper.addUser(userModel);
 
@@ -29,14 +31,18 @@ class UserProvider extends ChangeNotifier {
     return snapshot.ref.getDownloadURL();
   }
 
-  // getAllUsers() {
-  //   DBHelper.getAllUsers().listen((snapshot) {
-  //     userList = List.generate(snapshot.docs.length,
-  //             (index) => UserModel.fromMap(snapshot.docs[index].data()));
-  //     notifyListeners();
-  //   });
-  // }
+  getAllCities() {
+    DBHelper.getAllCities().listen((event) {
+      cityList = List.generate(event.docs.length,
+          (index) => CityModel.fromMap(event.docs[index].data()));
+      notifyListeners();
+    });
+  }
 
-  // void updateAvailable(String uid, Map<String, dynamic> map) =>
-  //     DBHelper.updateProfile(uid, map);
+  List<String> getAreaByCity(String? city) {
+    if (city == null) return <String>[];
+
+    final cityM = cityList.firstWhere((element) => element.name == city);
+    return cityM.area;
+  }
 }

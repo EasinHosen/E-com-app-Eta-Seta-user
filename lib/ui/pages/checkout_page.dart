@@ -3,6 +3,7 @@ import 'package:etaseta_user/auth/auth_services.dart';
 import 'package:etaseta_user/models/user_model.dart';
 import 'package:etaseta_user/providers/order_provider.dart';
 import 'package:etaseta_user/providers/user_provider.dart';
+import 'package:etaseta_user/ui/pages/user_address_page.dart';
 import 'package:etaseta_user/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,15 +22,18 @@ class _CheckoutPageState extends State<CheckoutPage> {
   late CartProvider cartProvider;
   late OrderProvider orderProvider;
   late UserProvider userProvider;
-  String groupValue = "COD";
+  bool isFirst = true;
+  String paymentGroupValue = "COD";
 
   @override
   void didChangeDependencies() {
-    cartProvider = Provider.of<CartProvider>(context);
-    orderProvider = Provider.of<OrderProvider>(context);
-    userProvider = Provider.of<UserProvider>(context);
-
-    orderProvider.getOrderConstants();
+    if (isFirst) {
+      cartProvider = Provider.of<CartProvider>(context);
+      orderProvider = Provider.of<OrderProvider>(context);
+      userProvider = Provider.of<UserProvider>(context, listen: false);
+      orderProvider.getOrderConstants();
+      isFirst = false;
+    }
 
     super.didChangeDependencies();
   }
@@ -45,7 +49,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
         children: [
           Expanded(
             child: ListView(
-              padding: EdgeInsets.all(8),
+              padding: const EdgeInsets.all(8),
               children: [
                 Text(
                   "Product Info",
@@ -83,7 +87,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                             '$currencySymbol ${cartProvider.getCartSubtotal()}'),
                       ),
                       ListTile(
-                        leading: Text("Delivery Charge"),
+                        leading: const Text("Delivery Charge"),
                         trailing: Text(
                             '${orderProvider.orderConstantsModel.deliveryCharge}'),
                       ),
@@ -103,7 +107,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                       ListTile(
                         leading: const Text("Grand total:"),
                         trailing: Text(
-                          "$currencySymbol ${orderProvider.getGrandTotal(cartProvider.getCartSubtotal())}",
+                          "$currencySymbol ${orderProvider.getGrandTotal(cartProvider.getCartSubtotal()).round()}",
                           style: const TextStyle(
                             fontSize: 20,
                           ),
@@ -130,10 +134,12 @@ class _CheckoutPageState extends State<CheckoutPage> {
                           final userM =
                               UserModel.fromMap(snapshot.data!.data()!);
                           final addressM = userM.address;
-                          print(addressM);
                           return Text(addressM == null
                               ? 'No address found!'
-                              : '${addressM.streetAddress}\n${addressM.area}\n${addressM.city}\n${addressM.zipCode}');
+                              : '${addressM.streetAddress},'
+                                  '\n${addressM.area},'
+                                  '\n${addressM.city},'
+                                  '\n${addressM.zipCode}.');
                         }
                         if (snapshot.hasError) {
                           return const Text('Error fetching data!');
@@ -142,11 +148,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
                       },
                     ),
                     trailing: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15))),
-                        onPressed: () {},
-                        child: const Text("Set")),
+                        onPressed: () => Navigator.pushNamed(
+                            context, UserAddressPage.routeName),
+                        child: const Text('Change')),
                   ),
                 ),
                 const SizedBox(
@@ -164,14 +168,14 @@ class _CheckoutPageState extends State<CheckoutPage> {
                         title: const Text("COD"),
                         leading: Radio<String>(
                             value: "COD",
-                            groupValue: groupValue,
+                            groupValue: paymentGroupValue,
                             fillColor: MaterialStateColor.resolveWith(
-                                (states) => groupValue == "COD"
-                                    ? Colors.red
+                                (states) => paymentGroupValue == "COD"
+                                    ? Theme.of(context).primaryColor
                                     : Colors.grey),
                             onChanged: (value) {
                               setState(() {
-                                groupValue = value as String;
+                                paymentGroupValue = value!;
                               });
                             }),
                       ),
@@ -181,14 +185,14 @@ class _CheckoutPageState extends State<CheckoutPage> {
                         title: const Text("Online"),
                         leading: Radio<String>(
                           value: "Online",
-                          groupValue: groupValue,
+                          groupValue: paymentGroupValue,
                           fillColor: MaterialStateColor.resolveWith((states) =>
-                              groupValue == "Online"
-                                  ? Colors.red
+                              paymentGroupValue == "Online"
+                                  ? Theme.of(context).primaryColor
                                   : Colors.grey),
                           onChanged: (value) {
                             setState(() {
-                              groupValue = value as String;
+                              paymentGroupValue = value!;
                             });
                           },
                         ),
@@ -200,9 +204,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
             ),
           ),
           ElevatedButton(
-              // style: ElevatedButton.styleFrom(
-              //     shape: RoundedRectangleBorder(
-              //         borderRadius: BorderRadius.circular(15))),
               onPressed: () {},
               child: const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 8.0),

@@ -11,15 +11,19 @@ import 'package:etaseta_user/ui/pages/login_page.dart';
 import 'package:etaseta_user/ui/pages/product_details_page.dart';
 import 'package:etaseta_user/ui/pages/product_page.dart';
 import 'package:etaseta_user/ui/pages/profile_page.dart';
+import 'package:etaseta_user/ui/pages/user_address_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:json_theme/json_theme.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
+  EasyLoading.init();
 
   final themeStr =
       await rootBundle.loadString('assets/theme/appainter_theme.json');
@@ -65,6 +69,7 @@ class MyApp extends StatelessWidget {
         ProfilePage.routeName: (context) => ProfilePage(),
         CartPage.routeName: (context) => CartPage(),
         CheckoutPage.routeName: (context) => CheckoutPage(),
+        UserAddressPage.routeName: (context) => UserAddressPage(),
       },
     );
   }
