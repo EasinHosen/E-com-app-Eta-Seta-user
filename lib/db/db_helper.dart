@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:etaseta_user/models/cart_model.dart';
+import 'package:etaseta_user/models/order_model.dart';
 import 'package:etaseta_user/models/product_model.dart';
 
+import '../models/category_model.dart';
 import '../models/purchase_model.dart';
 import '../models/user_model.dart';
 
@@ -23,8 +25,10 @@ class DBHelper {
   static Stream<QuerySnapshot<Map<String, dynamic>>> getAllCategories() =>
       _db.collection(collectionCategory).snapshots();
 
-  static Stream<QuerySnapshot<Map<String, dynamic>>> getAllProducts() =>
-      _db.collection(collectionProducts).snapshots();
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getAllProducts() => _db
+      .collection(collectionProducts)
+      .where(productAvailable, isEqualTo: true)
+      .snapshots();
 
   static Stream<QuerySnapshot<Map<String, dynamic>>> getAllProductsByCategory(
           String category) =>
@@ -100,4 +104,52 @@ class DBHelper {
 
   static Stream<QuerySnapshot<Map<String, dynamic>>> getAllCities() =>
       _db.collection(collectionCities).snapshots();
+
+  static Future<void> addNewOrder(
+      OrderModel orderModel, List<CartModel> cartList) {
+    final wb = _db.batch();
+    final orderDoc = _db.collection(collectionOrder).doc();
+    orderModel.oId = orderDoc.id;
+
+    wb.set(orderDoc, orderModel.toMap());
+    for (var cartM in cartList) {
+      final cartDoc =
+          orderDoc.collection(collectionOrderDetails).doc(cartM.pId);
+      wb.set(cartDoc, cartM.toMap());
+    }
+    return wb.commit();
+  }
+
+  static Future<void> updateProductStock(List<CartModel> cartList) {
+    final wb = _db.batch();
+    for (var cartM in cartList) {
+      final productDoc = _db.collection(collectionProducts).doc(cartM.pId);
+      wb.update(productDoc, {productStock: cartM.pStock - cartM.pQty});
+    }
+    return wb.commit();
+  }
+
+  static Future<void> updateCategoryProductCount(
+      List<CartModel> cartList, List<CategoryModel> categoryList) {
+    final wb = _db.batch();
+    for (var cartM in cartList) {
+      final categoryM =
+          categoryList.firstWhere((element) => element.name == cartM.pCategory);
+      final catDoc = _db.collection(collectionCategory).doc(categoryM.id);
+      wb.update(
+          catDoc, {categoryProductCount: categoryM.productCount - cartM.pQty});
+    }
+    return wb.commit();
+  }
+
+  static Future<void> clearUserCartItems(String uid, List<CartModel> cartList) {
+    final wb = _db.batch();
+
+    final userDoc = _db.collection(collectionUser).doc(uid);
+    for (var cartM in cartList) {
+      final cartDoc = userDoc.collection(collectionCart).doc(cartM.pId);
+      wb.delete(cartDoc);
+    }
+    return wb.commit();
+  }
 }

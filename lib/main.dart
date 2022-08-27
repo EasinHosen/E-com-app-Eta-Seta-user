@@ -23,8 +23,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  EasyLoading.init();
-
   final themeStr =
       await rootBundle.loadString('assets/theme/appainter_theme.json');
   final themeJson = jsonDecode(themeStr);
@@ -60,6 +58,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: theme,
+      builder: EasyLoading.init(),
       initialRoute: LauncherPage.routeName,
       routes: {
         LauncherPage.routeName: (context) => LauncherPage(),

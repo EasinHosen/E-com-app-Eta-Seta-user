@@ -11,6 +11,7 @@ import '../models/user_model.dart';
 
 class UserProvider extends ChangeNotifier {
   List<CityModel> cityList = [];
+  UserModel? userModel;
 
   Future<void> addUser(UserModel userModel) => DBHelper.addUser(userModel);
 

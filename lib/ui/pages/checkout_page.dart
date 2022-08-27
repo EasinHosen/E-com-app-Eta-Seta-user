@@ -1,11 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:etaseta_user/auth/auth_services.dart';
+import 'package:etaseta_user/models/date_model.dart';
+import 'package:etaseta_user/models/order_model.dart';
 import 'package:etaseta_user/models/user_model.dart';
 import 'package:etaseta_user/providers/order_provider.dart';
+import 'package:etaseta_user/providers/product_provider.dart';
 import 'package:etaseta_user/providers/user_provider.dart';
+import 'package:etaseta_user/ui/pages/product_page.dart';
 import 'package:etaseta_user/ui/pages/user_address_page.dart';
 import 'package:etaseta_user/utils/constants.dart';
+import 'package:etaseta_user/utils/helper_function.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/cart_provider.dart';
@@ -133,6 +139,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                         if (snapshot.hasData) {
                           final userM =
                               UserModel.fromMap(snapshot.data!.data()!);
+                          userProvider.userModel = userM;
                           final addressM = userM.address;
                           return Text(addressM == null
                               ? 'No address found!'
@@ -148,9 +155,11 @@ class _CheckoutPageState extends State<CheckoutPage> {
                       },
                     ),
                     trailing: ElevatedButton(
-                        onPressed: () => Navigator.pushNamed(
-                            context, UserAddressPage.routeName),
-                        child: const Text('Change')),
+                      onPressed: () => Navigator.pushNamed(
+                          context, UserAddressPage.routeName),
+                      child: Text(
+                          userProvider.userModel == null ? 'Set' : 'Change'),
+                    ),
                   ),
                 ),
                 const SizedBox(
@@ -204,7 +213,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
             ),
           ),
           ElevatedButton(
-              onPressed: () {},
+              onPressed: _saveOrder,
               child: const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 8.0),
                 child: Text("Place order"),
@@ -212,5 +221,50 @@ class _CheckoutPageState extends State<CheckoutPage> {
         ],
       ),
     );
+  }
+
+  void _saveOrder() {
+    if (userProvider.userModel?.address == null) {
+      showMsg(context, 'Please provide a delivery address');
+      return;
+    }
+
+    EasyLoading.show(status: 'Placing order...');
+
+    final orderM = OrderModel(
+      userId: AuthService.user!.uid,
+      orderSt: OrderStatus.pending,
+      paymentMethode: paymentGroupValue,
+      deliveryAddress: userProvider.userModel!.address!,
+      orderPlaceDate: DateModel(
+        timestamp: Timestamp.fromDate(DateTime.now()),
+        day: DateTime.now().day,
+        month: DateTime.now().month,
+        year: DateTime.now().year,
+      ),
+      grandTotal: orderProvider.getGrandTotal(cartProvider.getCartSubtotal()),
+      discount: orderProvider.orderConstantsModel.discount,
+      vat: orderProvider.orderConstantsModel.vat,
+      deliveryCharge: orderProvider.orderConstantsModel.deliveryCharge,
+    );
+
+    orderProvider.addOrder(orderM, cartProvider.cartList).then((value) {
+      orderProvider.updateStock(cartProvider.cartList).then((value) {
+        orderProvider
+            .updateCategoryProductCount(cartProvider.cartList,
+                context.read<ProductProvider>().categoryList)
+            .then((value) {
+          orderProvider
+              .clearUserCartItems(cartProvider.cartList)
+              .then((value) async {
+            EasyLoading.showSuccess('Success!!',
+                duration: const Duration(seconds: 3));
+            await Future.delayed(const Duration(seconds: 3), () {});
+            Navigator.pushReplacementNamed(context, ProductPage.routeName);
+            EasyLoading.dismiss();
+          });
+        });
+      });
+    });
   }
 }

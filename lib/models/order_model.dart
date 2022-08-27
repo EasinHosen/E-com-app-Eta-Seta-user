@@ -1,3 +1,5 @@
+import 'package:etaseta_user/models/address_model.dart';
+
 import 'date_model.dart';
 
 const String orderId = 'oId';
@@ -13,7 +15,8 @@ const String orderDeliveryCharge = 'deliveryCharge';
 
 class OrderModel {
   String? oId, userId;
-  String orderSt, paymentMethode, deliveryAddress;
+  String orderSt, paymentMethode;
+  AddressModel deliveryAddress;
   DateModel orderPlaceDate;
   num grandTotal, discount, vat, deliveryCharge;
 
@@ -35,7 +38,7 @@ class OrderModel {
       userId: map[orderUserId],
       orderSt: map[orderStatus],
       paymentMethode: map[orderPaymentMethode],
-      deliveryAddress: map[orderDeliveryAddress],
+      deliveryAddress: AddressModel.fromMap(map[orderDeliveryAddress]),
       orderPlaceDate: DateModel.fromMap(map[orderDate]),
       grandTotal: map[orderGrandTotal],
       discount: map[orderDiscount],
@@ -49,7 +52,7 @@ class OrderModel {
       orderUserId: userId,
       orderStatus: orderSt,
       orderPaymentMethode: paymentMethode,
-      orderDeliveryAddress: deliveryAddress,
+      orderDeliveryAddress: deliveryAddress.toMap(),
       orderDate: orderPlaceDate.toMap(),
       orderGrandTotal: grandTotal,
       orderDiscount: discount,

@@ -63,23 +63,42 @@ class _ProductItemState extends State<ProductItem> {
                 pName: product.name!,
                 pPrice: product.salesPrice,
                 pImage: product.imageUrl,
+                pStock: product.stock,
+                pCategory: product.category,
               );
               return IconButton(
-                onPressed: widget.productModel.available ? () {
-                  if(isInCart) {
-                    provider.removeFromCart(product.id!);
-                    showMsg(context, 'Removed from cart');
-                  } else {
+                onPressed: widget.productModel.available
+                    ? () {
+                        if (isInCart) {
+                          provider.removeFromCart(product.id!);
+                          showMsg(context, 'Removed from cart');
+                        } else {
                           provider.addToCart(cartItem);
                           showMsg(context, 'Added to cart');
                         }
-                      } : null,
+                      }
+                    : null,
                 icon: Icon(
-                  isInCart ? Icons.remove_shopping_cart_outlined : Icons.add_shopping_cart_outlined,
+                  isInCart
+                      ? Icons.remove_shopping_cart_outlined
+                      : Icons.add_shopping_cart_outlined,
                 ),
               );
             }),
           ),
+          if (widget.productModel.stock == 0)
+            Container(
+              alignment: Alignment.center,
+              color: Colors.white54,
+              child: Text(
+                'Out of Stock',
+                style: TextStyle(
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey.withOpacity(0.5),
+                ),
+              ),
+            ),
         ],
       ),
     );
