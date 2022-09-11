@@ -152,4 +152,12 @@ class DBHelper {
     }
     return wb.commit();
   }
+
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getOrderByUser(
+          String uid) =>
+      _db
+          .collection(collectionOrder)
+          .where(orderUserId, isEqualTo: uid)
+          .orderBy('$orderDate.timestamp', descending: true)
+          .snapshots();
 }

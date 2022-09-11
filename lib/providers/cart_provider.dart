@@ -35,22 +35,25 @@ class CartProvider extends ChangeNotifier {
     return flag;
   }
 
-  num itemPriceWithQty(CartModel cartModel) => cartModel.pPrice * cartModel.pQty;
+  num itemPriceWithQty(CartModel cartModel) =>
+      cartModel.pPrice * cartModel.pQty;
 
   num getCartSubtotal() {
     num total = 0;
-    for(var cartM in cartList){
+    for (var cartM in cartList) {
       total += cartM.pPrice * cartM.pQty;
     }
     return total;
   }
 
-  incQty(CartModel cartModel)async{
-    await DBHelper.updateCartItemQty(uid, cartModel.pId!, cartModel.pQty+1);
+  incQty(CartModel cartModel) async {
+    if (cartModel.pQty < cartModel.pStock) {
+      await DBHelper.updateCartItemQty(uid, cartModel.pId!, cartModel.pQty + 1);
+    }
   }
 
-  decQty(CartModel cartModel)async{
-    if(cartModel.pQty > 1){
+  decQty(CartModel cartModel) async {
+    if (cartModel.pQty > 1) {
       await DBHelper.updateCartItemQty(uid, cartModel.pId!, cartModel.pQty - 1);
     }
   }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../auth/auth_services.dart';
 import '../ui/pages/launcher_page.dart';
+import '../ui/pages/my_orders_page.dart';
 import '../ui/pages/profile_page.dart';
 
 class MainDrawer extends StatelessWidget {
@@ -34,13 +35,13 @@ class MainDrawer extends StatelessWidget {
           //   leading: Icon(Icons.people),
           //   title: Text('Users'),
           // ),
-          // ListTile(
-          //   onTap: () {
-          //     Navigator.pushReplacementNamed(context, ProductPage.routeName);
-          //   },
-          //   leading: const Icon(Icons.shop),
-          //   title: const Text('Products'),
-          // ),
+          ListTile(
+            onTap: () {
+              Navigator.pushNamed(context, MyOrdersPage.routeName);
+            },
+            leading: const Icon(Icons.shopping_bag),
+            title: const Text('My orders'),
+          ),
           ListTile(
             onTap: () {
               Navigator.pushNamed(context, ProfilePage.routeName);

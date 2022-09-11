@@ -229,7 +229,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
       return;
     }
 
-    EasyLoading.show(status: 'Placing order...');
+    EasyLoading.show(
+        status: 'Placing order...', maskType: EasyLoadingMaskType.black);
 
     final orderM = OrderModel(
       userId: AuthService.user!.uid,
@@ -257,8 +258,10 @@ class _CheckoutPageState extends State<CheckoutPage> {
           orderProvider
               .clearUserCartItems(cartProvider.cartList)
               .then((value) async {
-            EasyLoading.showSuccess('Success!!',
-                duration: const Duration(seconds: 3));
+            EasyLoading.showSuccess(
+              'Success!!',
+              duration: const Duration(seconds: 3),
+            );
             await Future.delayed(const Duration(seconds: 3), () {});
             Navigator.pushReplacementNamed(context, ProductPage.routeName);
             EasyLoading.dismiss();

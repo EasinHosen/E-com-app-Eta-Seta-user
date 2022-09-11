@@ -2,6 +2,7 @@ import 'package:etaseta_user/auth/auth_services.dart';
 import 'package:etaseta_user/models/order_model.dart';
 import 'package:flutter/material.dart';
 
+import '../auth/auth_services.dart';
 import '../db/db_helper.dart';
 import '../models/cart_model.dart';
 import '../models/category_model.dart';
@@ -9,6 +10,8 @@ import '../models/order_constants_model.dart';
 
 class OrderProvider extends ChangeNotifier {
   OrderConstantsModel orderConstantsModel = OrderConstantsModel();
+
+  List<OrderModel> orderList = [];
 
   Future<void> getOrderConstants() async {
     final snapshot = await DBHelper.getOrderConstants();
@@ -43,4 +46,12 @@ class OrderProvider extends ChangeNotifier {
 
   Future<void> clearUserCartItems(List<CartModel> cartList) =>
       DBHelper.clearUserCartItems(AuthService.user!.uid, cartList);
+
+  void getOrderByUser() {
+    DBHelper.getOrderByUser(AuthService.user!.uid).listen((event) {
+      orderList = List.generate(event.docs.length,
+          (index) => OrderModel.fromMap(event.docs[index].data()));
+      notifyListeners();
+    });
+  }
 }

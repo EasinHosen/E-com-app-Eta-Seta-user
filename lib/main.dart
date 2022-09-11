@@ -8,6 +8,7 @@ import 'package:etaseta_user/ui/pages/cart_page.dart';
 import 'package:etaseta_user/ui/pages/checkout_page.dart';
 import 'package:etaseta_user/ui/pages/launcher_page.dart';
 import 'package:etaseta_user/ui/pages/login_page.dart';
+import 'package:etaseta_user/ui/pages/my_orders_page.dart';
 import 'package:etaseta_user/ui/pages/product_details_page.dart';
 import 'package:etaseta_user/ui/pages/product_page.dart';
 import 'package:etaseta_user/ui/pages/profile_page.dart';
@@ -55,6 +56,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    EasyLoading.instance
+      ..indicatorType = EasyLoadingIndicatorType.wave
+      ..toastPosition = EasyLoadingToastPosition.bottom;
+
     return MaterialApp(
       title: 'Flutter Demo',
       theme: theme,
@@ -69,6 +74,7 @@ class MyApp extends StatelessWidget {
         CartPage.routeName: (context) => CartPage(),
         CheckoutPage.routeName: (context) => CheckoutPage(),
         UserAddressPage.routeName: (context) => UserAddressPage(),
+        MyOrdersPage.routeName: (context) => MyOrdersPage(),
       },
     );
   }

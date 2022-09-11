@@ -41,7 +41,7 @@ class _ProductPageState extends State<ProductPage> {
         title: const Text('Products'),
         actions: [
           InkWell(
-            onTap: ()=> Navigator.pushNamed(context, CartPage.routeName),
+            onTap: () => Navigator.pushNamed(context, CartPage.routeName),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Stack(
@@ -111,7 +111,7 @@ class _ProductPageState extends State<ProductPage> {
                                   placeholder: 'assets/images/img.png',
                                   image: fProduct.imageUrl!,
                                   fadeInCurve: Curves.bounceInOut,
-                                  fadeInDuration: Duration(seconds: 2),
+                                  fadeInDuration: const Duration(seconds: 2),
                                   width: double.infinity,
                                   height: 150,
                                   fit: BoxFit.fill,
@@ -121,7 +121,7 @@ class _ProductPageState extends State<ProductPage> {
                                     left: 0,
                                     right: 0,
                                     child: Container(
-                                      padding: EdgeInsets.all(4),
+                                      padding: const EdgeInsets.all(4),
                                       alignment: Alignment.center,
                                       color: Colors.black38,
                                       child: Text(
