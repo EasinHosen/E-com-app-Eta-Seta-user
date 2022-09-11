@@ -1,4 +1,5 @@
 import 'package:etaseta_user/providers/order_provider.dart';
+import 'package:etaseta_user/ui/pages/order_details_page.dart';
 import 'package:etaseta_user/utils/constants.dart';
 import 'package:etaseta_user/utils/helper_function.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +31,11 @@ class MyOrdersPage extends StatelessWidget {
                     subtitle: Text(orderM.orderSt),
                     trailing:
                         Text('$currencySymbol${orderM.grandTotal.round()}'),
+                    onTap: () {
+                      print(orderM.oId);
+                      Navigator.pushNamed(context, OrderDetailsPage.routeName,
+                          arguments: orderM);
+                    },
                   );
                 },
               )

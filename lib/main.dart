@@ -9,6 +9,7 @@ import 'package:etaseta_user/ui/pages/checkout_page.dart';
 import 'package:etaseta_user/ui/pages/launcher_page.dart';
 import 'package:etaseta_user/ui/pages/login_page.dart';
 import 'package:etaseta_user/ui/pages/my_orders_page.dart';
+import 'package:etaseta_user/ui/pages/order_details_page.dart';
 import 'package:etaseta_user/ui/pages/product_details_page.dart';
 import 'package:etaseta_user/ui/pages/product_page.dart';
 import 'package:etaseta_user/ui/pages/profile_page.dart';
@@ -75,6 +76,7 @@ class MyApp extends StatelessWidget {
         CheckoutPage.routeName: (context) => CheckoutPage(),
         UserAddressPage.routeName: (context) => UserAddressPage(),
         MyOrdersPage.routeName: (context) => MyOrdersPage(),
+        OrderDetailsPage.routeName: (context) => OrderDetailsPage(),
       },
     );
   }

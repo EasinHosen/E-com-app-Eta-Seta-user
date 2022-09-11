@@ -59,47 +59,48 @@ class _ProductItemState extends State<ProductItem> {
             Positioned(
               bottom: 10,
               right: 0,
-              child:
-                  Consumer<CartProvider>(builder: (context, provider, child) {
-                final product = widget.productModel;
-                final isInCart = provider.isInCart(product.id!);
-                final cartItem = CartModel(
-                  pId: product.id!,
-                  pName: product.name!,
-                  pPrice: product.salesPrice,
-                  pImage: product.imageUrl,
-                  pStock: product.stock,
-                  pCategory: product.category,
-                );
-                return IconButton(
-                  onPressed: widget.productModel.available
-                      ? () {
-                          if (isInCart) {
-                            provider.removeFromCart(product.id!);
-                            EasyLoading.showToast(
-                              'Removed from cart',
-                            );
-                          } else {
-                            provider.addToCart(cartItem);
-                            EasyLoading.showToast(
-                              'Added to cart!',
-                            );
+              child: Consumer<CartProvider>(
+                builder: (context, provider, child) {
+                  final product = widget.productModel;
+                  final isInCart = provider.isInCart(product.id!);
+                  final cartItem = CartModel(
+                    pId: product.id!,
+                    pName: product.name!,
+                    pPrice: product.salesPrice,
+                    pImage: product.imageUrl,
+                    pStock: product.stock,
+                    pCategory: product.category,
+                  );
+                  return IconButton(
+                    onPressed: widget.productModel.available
+                        ? () {
+                            if (isInCart) {
+                              provider.removeFromCart(product.id!);
+                              EasyLoading.showToast(
+                                'Removed from cart',
+                              );
+                            } else {
+                              provider.addToCart(cartItem);
+                              EasyLoading.showToast(
+                                'Added to cart!',
+                              );
+                            }
                           }
-                        }
-                      : null,
-                  icon: Icon(
-                    isInCart
-                        ? Icons.remove_shopping_cart_outlined
-                        : Icons.add_shopping_cart_outlined,
-                  ),
-                );
-              }),
+                        : null,
+                    icon: Icon(
+                      isInCart
+                          ? Icons.remove_shopping_cart_outlined
+                          : Icons.add_shopping_cart_outlined,
+                    ),
+                  );
+                },
+              ),
             ),
             if (widget.productModel.stock == 0)
               Container(
                 alignment: Alignment.center,
                 color: Colors.white70,
-                child: Text(
+                child: const Text(
                   'Out of Stock',
                   style: TextStyle(
                     fontSize: 25,
