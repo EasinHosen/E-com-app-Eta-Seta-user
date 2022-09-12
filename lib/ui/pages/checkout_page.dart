@@ -262,7 +262,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
               'Success!!',
               duration: const Duration(seconds: 3),
             );
-            await Future.delayed(const Duration(seconds: 3), () {});
+            await Future.delayed(const Duration(seconds: 3));
             Navigator.pushReplacementNamed(context, ProductPage.routeName);
             EasyLoading.dismiss();
           });

@@ -160,4 +160,12 @@ class DBHelper {
           .where(orderUserId, isEqualTo: uid)
           .orderBy('$orderDate.timestamp', descending: true)
           .snapshots();
+
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getOrderByOrderId(
+          String oId) =>
+      _db
+          .collection(collectionOrder)
+          .doc(oId)
+          .collection(collectionOrderDetails)
+          .snapshots();
 }

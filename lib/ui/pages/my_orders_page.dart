@@ -32,7 +32,7 @@ class MyOrdersPage extends StatelessWidget {
                     trailing:
                         Text('$currencySymbol${orderM.grandTotal.round()}'),
                     onTap: () {
-                      print(orderM.oId);
+                      // print(orderM.oId);
                       Navigator.pushNamed(context, OrderDetailsPage.routeName,
                           arguments: orderM);
                     },
