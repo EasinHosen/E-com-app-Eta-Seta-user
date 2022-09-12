@@ -1,9 +1,11 @@
 import 'package:etaseta_user/providers/cart_provider.dart';
+import 'package:etaseta_user/providers/order_provider.dart';
 import 'package:etaseta_user/ui/pages/checkout_page.dart';
 import 'package:etaseta_user/utils/constants.dart';
 import 'package:etaseta_user/utils/helper_function.dart';
 import 'package:etaseta_user/widgets/cart_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 
 class CartPage extends StatelessWidget {
@@ -12,13 +14,45 @@ class CartPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cartM = Provider.of<CartProvider>(context, listen: false);
+    final cartList = cartM.cartList;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('My cart'),
         actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.clear),
+          Consumer<OrderProvider>(
+            builder: (context, ordProvider, _) => IconButton(
+              onPressed: () {
+                cartList.isNotEmpty
+                    ? showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: const Text('Clear cart?'),
+                          content: const Text(
+                              'Do you really want to clear your cart?'),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Text('No'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                ordProvider.clearUserCartItems(cartList);
+                                Navigator.pop(context);
+                                EasyLoading.showToast('Cart cleared!');
+                              },
+                              child: const Text('Yes'),
+                            ),
+                          ],
+                        ),
+                      )
+                    : EasyLoading.showToast('Your cart is empty!!');
+              },
+              icon: const Icon(Icons.clear),
+            ),
           ),
         ],
       ),
@@ -33,13 +67,13 @@ class CartPage extends StatelessWidget {
                   return CartItem(
                     cartModel: cartModel,
                     priceWithQty: provider.itemPriceWithQty(cartModel),
-                    onInc: (){
+                    onInc: () {
                       provider.incQty(cartModel);
                     },
-                    onDec: (){
+                    onDec: () {
                       provider.decQty(cartModel);
                     },
-                    onDel: (){
+                    onDel: () {
                       provider.removeFromCart(cartModel.pId!);
                       showMsg(context, 'Item removed from cart');
                     },
@@ -62,9 +96,12 @@ class CartPage extends StatelessWidget {
                       ),
                       const Spacer(),
                       ElevatedButton(
-                          onPressed: provider.totalCartItem == 0 ? null : () {
-                            Navigator.of(context).pushNamed(CheckoutPage.routeName);
-                          },
+                          onPressed: provider.totalCartItem == 0
+                              ? null
+                              : () {
+                                  Navigator.of(context)
+                                      .pushNamed(CheckoutPage.routeName);
+                                },
                           child: const Text('Checkout'))
                     ],
                   ),

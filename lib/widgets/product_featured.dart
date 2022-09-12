@@ -9,6 +9,7 @@ class ProductFeatured extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Future.delayed(const Duration(seconds: 1));
     return Card(
       elevation: 5,
       child: CarouselSlider.builder(
@@ -28,20 +29,24 @@ class ProductFeatured extends StatelessWidget {
                 fit: BoxFit.fill,
               ),
               Positioned(
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  child: Container(
-                    padding: const EdgeInsets.all(4),
-                    alignment: Alignment.center,
-                    color: Colors.black38,
-                    child: Text(
-                      fProduct.name!,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                      style: const TextStyle(fontSize: 20, color: Colors.white),
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: Container(
+                  padding: const EdgeInsets.all(4),
+                  alignment: Alignment.center,
+                  color: Colors.black38,
+                  child: Text(
+                    fProduct.name!,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
                     ),
-                  )),
+                  ),
+                ),
+              ),
             ]),
           );
         },

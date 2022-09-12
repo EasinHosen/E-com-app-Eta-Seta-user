@@ -98,7 +98,14 @@ class _ProductPageState extends State<ProductPage> {
                     const Divider(
                       height: 1.5,
                     ),
-                    ProductFeatured(provider: productProvider),
+                    Consumer<ProductProvider>(
+                      builder: (context, provider, _) {
+                        // print('featured called');
+                        return provider.featuredProductList.isNotEmpty
+                            ? ProductFeatured(provider: provider)
+                            : const Text('Loading...');
+                      },
+                    ),
                   ],
                 ),
                 collapseMode: CollapseMode.parallax, //featured product,
