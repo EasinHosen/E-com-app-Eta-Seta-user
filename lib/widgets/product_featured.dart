@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:etaseta_user/providers/product_provider.dart';
+import 'package:etaseta_user/ui/pages/product_details_page.dart';
 import 'package:flutter/material.dart';
 
 class ProductFeatured extends StatelessWidget {
@@ -16,38 +17,46 @@ class ProductFeatured extends StatelessWidget {
         itemCount: provider.featuredProductList.length,
         itemBuilder: (context, index, realIndex) {
           final fProduct = provider.featuredProductList[index];
-          return Card(
-            elevation: 5,
-            child: Stack(children: [
-              FadeInImage.assetNetwork(
-                placeholder: 'assets/images/img.png',
-                image: fProduct.imageUrl!,
-                fadeInCurve: Curves.bounceInOut,
-                fadeInDuration: const Duration(seconds: 2),
-                width: double.infinity,
-                height: 150,
-                fit: BoxFit.fill,
-              ),
-              Positioned(
-                bottom: 0,
-                left: 0,
-                right: 0,
-                child: Container(
-                  padding: const EdgeInsets.all(4),
-                  alignment: Alignment.center,
-                  color: Colors.black38,
-                  child: Text(
-                    fProduct.name!,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      color: Colors.white,
+          return InkWell(
+            onTap: () {
+              Navigator.pushNamed(context, ProductDetailsPage.routeName,
+                  arguments: fProduct.id);
+            },
+            child: Card(
+              elevation: 5,
+              child: Stack(
+                children: [
+                  FadeInImage.assetNetwork(
+                    placeholder: 'assets/images/img.png',
+                    image: fProduct.imageUrl!,
+                    fadeInCurve: Curves.bounceInOut,
+                    fadeInDuration: const Duration(seconds: 2),
+                    width: double.infinity,
+                    height: 150,
+                    fit: BoxFit.fill,
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    child: Container(
+                      padding: const EdgeInsets.all(4),
+                      alignment: Alignment.center,
+                      color: Colors.black38,
+                      child: Text(
+                        fProduct.name!,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                ],
               ),
-            ]),
+            ),
           );
         },
         options: CarouselOptions(
