@@ -221,6 +221,7 @@ class _LoginPageState extends State<LoginPage> {
                         InkWell(
                           onTap: () {
                             print('Facebook');
+                            _facebookSignIn();
                           },
                           child: Image.asset(
                             'assets/images/facebook-icon.png',
@@ -284,6 +285,30 @@ class _LoginPageState extends State<LoginPage> {
 
   void _googleSignIn() {
     AuthService.signInWithGoogle().then((value) async {
+      if (value.user != null) {
+        final userModel = UserModel(
+          name: value.user!.displayName ?? 'User',
+          mobile: value.user!.phoneNumber,
+          image: value.user!.photoURL,
+          uid: value.user!.uid,
+          email: value.user!.email!,
+          creationTime: Timestamp.fromDate(value.user!.metadata.creationTime!),
+        );
+        if (value.additionalUserInfo!.isNewUser == true) {
+          await Provider.of<UserProvider>(context, listen: false)
+              .addUser(userModel);
+        }
+        Navigator.pushReplacementNamed(context, LauncherPage.routeName);
+      }
+    }).onError((error, _) {
+      setState(() {
+        errMsg = error.toString();
+      });
+    });
+  }
+
+  void _facebookSignIn() {
+    AuthService.signInWithFacebook().then((value) async {
       if (value.user != null) {
         final userModel = UserModel(
           name: value.user!.displayName ?? 'User',

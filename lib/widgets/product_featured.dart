@@ -10,7 +10,6 @@ class ProductFeatured extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Future.delayed(const Duration(seconds: 1));
     return Card(
       elevation: 5,
       child: CarouselSlider.builder(
