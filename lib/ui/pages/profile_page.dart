@@ -86,9 +86,9 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   ListTile(
                     title: Text(
-                        userModel.mobile != null || userModel.mobile!.isNotEmpty
-                            ? userModel.mobile!
-                            : 'No number added'),
+                        userModel.mobile == null || userModel.mobile!.isEmpty
+                            ? 'No number added'
+                            : userModel.mobile!),
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -139,11 +139,15 @@ class _ProfilePageState extends State<ProfilePage> {
                     trailing: TextButton(
                       child: Text(
                         'Verify phone',
-                        style: userModel.mobileVerified
+                        style: userModel.mobile == null ||
+                                userModel.mobile!.isEmpty ||
+                                userModel.mobileVerified
                             ? const TextStyle(color: Colors.grey)
                             : const TextStyle(color: Colors.green),
                       ),
-                      onPressed: () => userModel.mobileVerified
+                      onPressed: () => userModel.mobile == null ||
+                              userModel.mobile!.isEmpty ||
+                              userModel.mobileVerified
                           ? null
                           : Navigator.pushNamed(
                               context, PhoneVerificationPage.routeName,

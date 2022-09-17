@@ -181,18 +181,18 @@ class _LoginPageState extends State<LoginPage> {
                             child: const Text('Click here!'))
                       ],
                     ),
-                    Visibility(
-                      visible: isNewUser ? false : true,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text('Forgot password?'),
-                          TextButton(
-                              onPressed: () {},
-                              child: const Text('Click here!'))
-                        ],
-                      ),
-                    ),
+                    // Visibility(
+                    //   visible: isNewUser ? false : true,
+                    //   child: Row(
+                    //     mainAxisAlignment: MainAxisAlignment.center,
+                    //     children: [
+                    //       const Text('Forgot password?'),
+                    //       TextButton(
+                    //           onPressed: () {},
+                    //           child: const Text('Click here!'))
+                    //     ],
+                    //   ),
+                    // ),                 //disabling the forgot password option for now
                     const SizedBox(
                       height: 20,
                     ),
@@ -220,7 +220,6 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         InkWell(
                           onTap: () {
-                            print('Facebook');
                             _facebookSignIn();
                           },
                           child: Image.asset(
@@ -288,7 +287,7 @@ class _LoginPageState extends State<LoginPage> {
       if (value.user != null) {
         final userModel = UserModel(
           name: value.user!.displayName ?? 'User',
-          mobile: value.user!.phoneNumber,
+          mobile: value.user!.phoneNumber ?? '',
           image: value.user!.photoURL,
           uid: value.user!.uid,
           email: value.user!.email!,
@@ -307,12 +306,12 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
-  void _facebookSignIn() {
+  void _facebookSignIn() async {
     AuthService.signInWithFacebook().then((value) async {
       if (value.user != null) {
         final userModel = UserModel(
           name: value.user!.displayName ?? 'User',
-          mobile: value.user!.phoneNumber,
+          mobile: value.user!.phoneNumber ?? '',
           image: value.user!.photoURL,
           uid: value.user!.uid,
           email: value.user!.email!,
