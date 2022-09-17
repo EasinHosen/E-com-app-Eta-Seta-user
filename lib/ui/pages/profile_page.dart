@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:etaseta_user/ui/pages/phone_verification_page.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -84,16 +85,42 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
                   ListTile(
-                    title: Text(userModel.mobile ?? 'No number added'),
-                    trailing: IconButton(
-                      icon: const Icon(Icons.edit),
-                      onPressed: () {
-                        showInputDialog('Mobile number', userModel.mobile,
-                            (value) {
-                          provider.updateProfile(
-                              AuthService.user!.uid, {'mobile': value});
-                        });
-                      },
+                    title: Text(
+                        userModel.mobile != null || userModel.mobile!.isNotEmpty
+                            ? userModel.mobile!
+                            : 'No number added'),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        if (userModel.mobile != null ||
+                            userModel.mobile!.isNotEmpty)
+                          Flexible(
+                            child: Text(
+                              userModel.mobileVerified
+                                  ? 'verified'
+                                  : 'not verified',
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  color: userModel.mobileVerified
+                                      ? Colors.green
+                                      : Colors.red),
+                            ),
+                          ),
+                        Flexible(
+                          child: IconButton(
+                            icon: const Icon(Icons.edit),
+                            onPressed: () {
+                              showInputDialog('Mobile number', userModel.mobile,
+                                  (value) {
+                                provider.updateProfile(
+                                    AuthService.user!.uid, {'mobile': value});
+                                provider.updateProfile(AuthService.user!.uid,
+                                    {'mobileVerified': false});
+                              });
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   ListTile(
@@ -106,6 +133,21 @@ class _ProfilePageState extends State<ProfilePage> {
                               AuthService.user!.uid, {'email': value});
                         });
                       },
+                    ),
+                  ),
+                  ListTile(
+                    trailing: TextButton(
+                      child: Text(
+                        'Verify phone',
+                        style: userModel.mobileVerified
+                            ? const TextStyle(color: Colors.grey)
+                            : const TextStyle(color: Colors.green),
+                      ),
+                      onPressed: () => userModel.mobileVerified
+                          ? null
+                          : Navigator.pushNamed(
+                              context, PhoneVerificationPage.routeName,
+                              arguments: userModel.mobile),
                     ),
                   ),
                 ],

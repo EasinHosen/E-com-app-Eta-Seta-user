@@ -10,23 +10,25 @@ const String userImage = 'image';
 const String userDeviceToken = 'deviceToken';
 const String userCreationTime = 'creationTime';
 const String userAddress = 'address';
+const String userMobileVerified = 'mobileVerified';
 
 class UserModel {
   String uid, email;
   String? name, mobile, image, deviceToken;
   Timestamp creationTime;
   AddressModel? address;
+  bool mobileVerified;
 
-  UserModel({
-    required this.uid,
-    this.name,
-    required this.email,
-    this.mobile,
-    this.image,
-    this.deviceToken,
-    required this.creationTime,
-    this.address,
-  });
+  UserModel(
+      {required this.uid,
+      this.name,
+      required this.email,
+      this.mobile,
+      this.image,
+      this.deviceToken,
+      required this.creationTime,
+      this.address,
+      this.mobileVerified = false});
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -38,6 +40,7 @@ class UserModel {
       userDeviceToken: deviceToken,
       userCreationTime: creationTime,
       userAddress: address?.toMap(),
+      userMobileVerified: mobileVerified,
     };
   }
 
@@ -52,5 +55,6 @@ class UserModel {
         address: map[userAddress] == null
             ? null
             : AddressModel.fromMap(map[userAddress]),
+        mobileVerified: map[userMobileVerified],
       );
 }

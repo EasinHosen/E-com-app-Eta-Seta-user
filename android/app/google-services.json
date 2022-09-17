@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "23444237739-k0fmlnljt51b7lnv3hued48bo4up35qg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kkeb.etaseta_admin",
+            "certificate_hash": "73e385d1ac6181335b1932e1a263df34c139f3c0"
+          }
+        },
+        {
           "client_id": "23444237739-v368uc15oeugosiul8pislgl0d7kaot9.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -58,6 +66,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "23444237739-6cg83n6ekutucj7uid8br3t66geg4ndu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kkeb.etaseta_user",
+            "certificate_hash": "450475b4bf72ff02a7a00ce4befad64f755b2edf"
+          }
+        },
         {
           "client_id": "23444237739-8q9qnbn7i6fsq6rjh5j701n0b6tpb28o.apps.googleusercontent.com",
           "client_type": 1,

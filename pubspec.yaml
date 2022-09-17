@@ -46,7 +46,8 @@ dependencies:
   google_sign_in:
   flutter_facebook_auth:
   json_theme:
-  carousel_slider: 
+  carousel_slider:
+  pinput:
 
 dev_dependencies:
   flutter_test:
