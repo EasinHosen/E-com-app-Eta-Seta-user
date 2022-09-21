@@ -3,7 +3,8 @@ An E-commerce app using firebase and flutter.
 
 Login and Register screen-
 
-![login](https://user-images.githubusercontent.com/72916174/191494241-346cef8a-6b8c-4225-814b-daae1b501ad2.png width=50% height=50%) ![register](https://user-images.githubusercontent.com/72916174/191494260-b1776848-684e-4630-8c92-07e38e1c44e7.png)
+<img src="https://user-images.githubusercontent.com/72916174/191494241-346cef8a-6b8c-4225-814b-daae1b501ad2.png" width=50% height=50%>
+![register](https://user-images.githubusercontent.com/72916174/191494260-b1776848-684e-4630-8c92-07e38e1c44e7.png)
 
 Home, categorywise product & menu drawer-
 
