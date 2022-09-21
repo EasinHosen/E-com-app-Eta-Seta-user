@@ -10,7 +10,9 @@ Home, categorywise product & menu drawer-
 ![home](https://user-images.githubusercontent.com/72916174/191494363-2906a9d0-782e-4663-83da-9d1e41d95d26.png) ![category wise product](https://user-images.githubusercontent.com/72916174/191494920-db822987-4e7c-4871-9fb0-08f98782c0ea.png) ![menu](https://user-images.githubusercontent.com/72916174/191494381-df139d2b-c69c-474a-98cb-5cc59e475a21.png)
 
 Profile & phone verification-
-![profile](https://user-images.githubusercontent.com/72916174/191494466-60398ece-449a-45c8-9802-3b0985c347e3.png)  ![verify](https://user-images.githubusercontent.com/72916174/191494506-3a802459-dcf8-4284-8c87-a080d03c8c02.png)  ![number verified](https://user-images.githubusercontent.com/72916174/191494539-3b0bfdba-d506-406d-b6e1-bdf0d71ebbb1.png)
+![profile](https://user-images.githubusercontent.com/72916174/191495560-d5fbdade-d01e-4c46-8ac4-d51361a97921.png)  ![verify](https://user-images.githubusercontent.com/72916174/191495637-ff12b061-2cc7-451b-b6d1-541d6feda9b4.png) ![number verified](https://user-images.githubusercontent.com/72916174/191495829-97368d9d-d657-4fed-bb9e-f888d06e1fb6.png)
+
+
 
 Add to cart and cart page- 
 
